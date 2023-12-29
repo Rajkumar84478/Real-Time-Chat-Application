@@ -7,6 +7,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loginRoute } from "../utils/APIRoutes";
 
+
+// import Backg from "./Backg";
+import BackImage from './BackImage.jpeg'
+// import Functions from "../components/Functions.jsx";
+
+
 export default function Login() {
   const navigate = useNavigate();
   const [values, setValues] = useState({ username: "", password: "" });
@@ -17,11 +23,11 @@ export default function Login() {
     draggable: true,
     theme: "dark",
   };
-  useEffect(() => {
+     useEffect(() => {
     if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
-      navigate("/");
-    }
-  }, []);
+     navigate("/");
+     }
+   }, []);
 
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
@@ -60,10 +66,27 @@ export default function Login() {
       }
     }
   };
+  
 
+  const myStyle = {
+    backgroundImage:
+        `url(${BackImage})`,
+    height: "100vh",
+    width : "100vw",
+    marginTop: "-0px",
+    fontSize: "10px",
+    backgroundSize: "center",
+    overFlow: "hidden",
+  
+    backgroundRepeat: "no-repeat"
+};
   return (
-    <>
+  <>
+
+      <div style={myStyle}>  
+      {/* <Functions/> */}
       <FormContainer>
+      
         <form action="" onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
             <img src={Logo} alt="logo" />
@@ -87,21 +110,26 @@ export default function Login() {
             Don't have an account ? <Link to="/register">Create One.</Link>
           </span>
         </form>
+      
       </FormContainer>
+     
       <ToastContainer />
-    </>
+      </div>
+      </>
+            
   );
 }
 
 const FormContainer = styled.div`
-  height: 100vh;
-  width: 100vw;
+height: 100vh;
+width: 100vw;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content:center;
+  margin-left: 440px;
   gap: 1rem;
-  align-items: center;
-  background-color: #131324;
+  align-items:center;
+  // background-color: #131324;
   .brand {
     display: flex;
     align-items: center;
@@ -120,7 +148,7 @@ const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    background-color: #00000076;
+    background-color: #00000098;
     border-radius: 2rem;
     padding: 5rem;
   }
@@ -160,4 +188,5 @@ const FormContainer = styled.div`
       font-weight: bold;
     }
   }
+  
 `;

@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 mongoose
-  .connect("mongodb+srv://rajkumarchauhan84478:bkpi46Pd3kMt4kyA@chat-app-clone.w6jwoxi.mongodb.net/", {
+  .connect("mongodb+srv://kartikpatialit20b1040:BTHfnJcNirSS1XWX@cluster0.j3rtqk8.mongodb.net/", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

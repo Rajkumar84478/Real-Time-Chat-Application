@@ -6,6 +6,8 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
 
+import Functions from "./Functions";
+
 export default function ChatContainer({ currentChat, socket }) {
   const [messages, setMessages] = useState([]);
   const scrollRef = useRef();
@@ -70,7 +72,9 @@ export default function ChatContainer({ currentChat, socket }) {
   }, [messages]);
 
   return (
-    <Container>
+    <>
+        
+        <Container>
       <div className="chat-header">
         <div className="user-details">
           <div className="avatar">
@@ -83,6 +87,7 @@ export default function ChatContainer({ currentChat, socket }) {
             <h3>{currentChat.username}</h3>
           </div>
         </div>
+        <Functions/>
         <Logout />
       </div>
       <div className="chat-messages">
@@ -102,8 +107,9 @@ export default function ChatContainer({ currentChat, socket }) {
           );
         })}
       </div>
-      <ChatInput handleSendMsg={handleSendMsg} />
+      <ChatInput handleSendMsg={handleSendMsg}/>
     </Container>
+    </>
   );
 }
 

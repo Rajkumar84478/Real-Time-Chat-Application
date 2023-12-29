@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { BsEmojiSmileFill } from "react-icons/bs";
 import { IoMdSend } from "react-icons/io";
 import styled from "styled-components";
 import Picker from "emoji-picker-react";
 
-export default function ChatInput({ handleSendMsg }) {
+
+export default function ChatInput({ handleSendMsg, orgmsg}) {
   const [msg, setMsg] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const handleEmojiPickerhideShow = () => {
     setShowEmojiPicker(!showEmojiPicker);
   };
+
+
+  const messageInputRef = useRef(null);
+  let recognition;
+
 
   const handleEmojiClick = (event, emojiObject) => {
     let message = msg;
@@ -25,7 +31,28 @@ export default function ChatInput({ handleSendMsg }) {
     }
   };
 
+
+  const startSpeechRecognition = () => {
+    recognition =new window.webkitSpeechRecognition(); // For browsers supporting the Web Speech API
+    recognition.onresult = function (event) {
+      const transcript = event.results[0][0].transcript;
+      messageInputRef.current.value = transcript;
+    };
+    recognition.start();
+  };
+
+  const textToSpeech = () => {
+    const message = messageInputRef.current.value;
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(message);
+      window.speechSynthesis.speak(utterance);
+    } else {
+      console.error('Text-to-speech not supported in this browser.');
+    }
+  };
+
   return (
+    
     <Container>
       <div className="button-container">
         <div className="emoji">
@@ -39,7 +66,10 @@ export default function ChatInput({ handleSendMsg }) {
           placeholder="type your message here"
           onChange={(e) => setMsg(e.target.value)}
           value={msg}
+          ref={messageInputRef}
         />
+        <button onClick={startSpeechRecognition}>Start Microphone</button>
+        <button onClick={textToSpeech}>Text to Speech</button>
         <button type="submit">
           <IoMdSend />
         </button>
